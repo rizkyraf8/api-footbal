@@ -15,4 +15,5 @@ $lang['text_rest_api_key_permissions'] = 'This API key does not have enough perm
 $lang['text_rest_api_key_time_limit'] = 'This API key has reached the time limit for this method';
 $lang['text_rest_ip_address_time_limit'] = 'This IP Address has reached the time limit for this method';
 $lang['text_rest_unknown_method'] = 'Unknown method';
+$lang['rest_code_field_name'] = "status";
 $lang['text_rest_unsupported'] = 'Unsupported protocol';

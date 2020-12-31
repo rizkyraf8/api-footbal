@@ -72,6 +72,16 @@ $config['rest_error_field_name'] = 'error';
 | The field name for the desc inside the response
 |
 */
+$config['rest_code_field_name'] = 'status';
+
+/*
+|--------------------------------------------------------------------------
+| REST Description Field Name
+|--------------------------------------------------------------------------
+|
+| The field name for the desc inside the response
+|
+*/
 $config['rest_desc_field_name'] = 'message';
 
 /*
