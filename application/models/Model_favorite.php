@@ -8,6 +8,10 @@ class Model_favorite extends CI_Model {
 
     public function get_list_team($id = ""){
         return $this->db->where("userId", $id)->get($this->table_favorite_team)->result_array();
+	}
+	
+    public function get_team($id = "", $teamId = ""){
+        return $this->db->where(array("userId" => $id , "teamId" => $teamId))->get($this->table_favorite_team)->row_array();
     }
 
     public function insert_team($data){
@@ -34,7 +38,11 @@ class Model_favorite extends CI_Model {
 
     public function get_list_match($id = ""){
         return $this->db->where("userId", $id)->get($this->table_favorite_match)->result_array();
-    }
+	}
+
+    public function get_match($id = "", $matchId = ""){
+        return $this->db->where(array("userId" => $id , "matchId" => $matchId))->get($this->table_favorite_match)->row_array();
+	}
 
     public function insert_match($data){
         $this->db->insert($this->table_favorite_match, $data);

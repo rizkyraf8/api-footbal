@@ -10,21 +10,27 @@ class Favorite extends API_Controller {
         $this->load->model('Model_favorite');
     }
     
-    public function team_get()
+    public function team_get($id = "")
     {
         $response['status'] = 200;
         $response['error'] = false;
         $response['message'] = 'Approved';
         $response['data'] = array();
         
-        $query = $this->Model_favorite->get_list_team($this->jwtData->id);
-        
-        foreach ($query as $key => $value) {
-            $item = (array) json_decode($value["favoriteTeamGson"]);
+        if($id == ""){
+            $query = $this->Model_favorite->get_list_team($this->jwtData->id);
             
-            $item["faveroiteTeamId"] = $value["faveroiteTeamId"];
+            foreach ($query as $key => $value) {
+                $item = (array) json_decode($value["favoriteTeamGson"]);
+                
+                $item["faveroiteTeamId"] = $value["faveroiteTeamId"];
+                
+                array_push($response["data"], $item);
+            }
+        }else{
+            $query = $this->Model_favorite->get_team($this->jwtData->id, $id);
             
-            array_push($response["data"], $item);
+            $response['data'] = (array) json_decode($query["favoriteTeamGson"]);  
         }
         
         $this->response($response, 200);
@@ -36,11 +42,13 @@ class Favorite extends API_Controller {
         
         $this->form_validation->set_data($post);
         $this->form_validation->set_rules('favorite','favorite','required');
+        $this->form_validation->set_rules('teamId','teamId','required');
         
         if ($this->form_validation->run() == TRUE) {
             
             $query = $this->Model_favorite->insert_team(array(
                 "favoriteTeamGson" => $post["favorite"],
+                "teamId" => $post["teamId"],
                 "userId" => $this->jwtData->id
             ));
             
@@ -79,25 +87,32 @@ class Favorite extends API_Controller {
             $response['status'] = 200;
             $response['message'] = "Gagal menambahkan favorite";
         }
-
+        
         $this->response($response, $response['status']);
     }
     
-    public function match_get()
+    public function match_get($id = "")
     {
         $response['status'] = 200;
         $response['error'] = false;
         $response['message'] = 'Approved';
         $response['data'] = array();
         
-        $query = $this->Model_favorite->get_list_match($this->jwtData->id);
-        
-        foreach ($query as $key => $value) {
-            $item = (array) json_decode($value["favoriteMatchGson"]);
+        if($id == ""){
+            $query = $this->Model_favorite->get_list_match($this->jwtData->id);
             
-            $item["faveroiteMatchId"] = $value["faveroiteMatchId"];
+            foreach ($query as $key => $value) {
+                $item = (array) json_decode($value["favoriteMatchGson"]);
+                
+                $item["faveroiteMatchId"] = $value["faveroiteMatchId"];
+                
+                array_push($response["data"], $item);
+            }
             
-            array_push($response["data"], $item);
+        }else{
+            $query = $this->Model_favorite->get_match($this->jwtData->id, $id);
+            
+            $response['data'] = (array) json_decode($query["favoriteMatchGson"]);  
         }
         
         $this->response($response, 200);
@@ -109,11 +124,13 @@ class Favorite extends API_Controller {
         
         $this->form_validation->set_data($post);
         $this->form_validation->set_rules('favorite','favorite','required');
+        $this->form_validation->set_rules('matchId','matchId','required');
         
         if ($this->form_validation->run() == TRUE) {
             
             $query = $this->Model_favorite->insert_match(array(
                 "favoriteMatchGson" => $post["favorite"],
+                "matchId" => $post["matchId"],
                 "userId" => $this->jwtData->id
             ));
             
@@ -152,7 +169,7 @@ class Favorite extends API_Controller {
             $response['status'] = 200;
             $response['message'] = "Gagal menambahkan favorite";
         }
-
+        
         $this->response($response, $response['status']);
     }
     
