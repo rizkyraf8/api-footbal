@@ -30,7 +30,11 @@ class Favorite extends API_Controller {
         }else{
             $query = $this->Model_favorite->get_team($this->jwtData->id, $id);
             
-            $response['data'] = (array) json_decode($query["favoriteTeamGson"]);  
+            if($query){
+                $response['data'] = (array) json_decode($query["favoriteTeamGson"]);  
+            }   else{
+                $response['data'] = null;
+            }
         }
         
         $this->response($response, 200);
@@ -112,7 +116,11 @@ class Favorite extends API_Controller {
         }else{
             $query = $this->Model_favorite->get_match($this->jwtData->id, $id);
             
-            $response['data'] = (array) json_decode($query["favoriteMatchGson"]);  
+            if($query){
+                $response['data'] = (array) json_decode($query["favoriteMatchGson"]);  
+            }else{
+                $response['data'] = null;
+            }
         }
         
         $this->response($response, 200);
